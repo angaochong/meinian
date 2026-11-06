@@ -1,0 +1,126 @@
+spring:
+  application:
+    name: meinian-api
+  servlet:
+    multipart:
+      # 允许文件上传
+      enabled: true
+      # 每个文件最大不能超过15MB
+      max-file-size: 15MB
+      # HTTP请求不能超过20MB
+      max-request-size: 20MB # Spring MVC中的配置，属于二道防线。
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.91.200:3309/meinian-his?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+    username: root
+    password: 123456
+    hikari:
+      # HikariCP不需要指定连接池初始大小，它会自动维护。
+      # 最小空闲连接数
+      minimum-idle: 8
+      # 最大连接数
+      maximum-pool-size: 16
+      # 连接超时时间（毫秒）
+      connection-timeout: 60000
+      # 连接测试查询
+      connection-test-query: SELECT 1
+  data:
+    mongodb:
+      uri: mongodb://admin:123456@192.168.91.200:27017/meinian-his?authSource=admin
+    redis:
+      database: 0
+      host: 192.168.91.200
+      port: 6379
+      password: 123456
+      jedis:
+        pool:
+          #连接超时的最大时间
+          max-active: 1000
+          #等待空闲连接的最大等待时间（负数代表一直等待）
+          max-wait: -1ms
+          max-idle: 16
+          min-idle: 8
+  cache:
+    type: redis
+    redis:
+      time-to-live: 2592000000  # 30天缓存时间（单位：毫秒）
+server:
+  port: 8080
+  servlet:
+    context-path: /meinian-api
+#  ssl:
+#    enabled: true
+#    key-store-type: PKCS12
+#    key-store: classpath:keystore.p12
+#    key-store-password: 123456
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.jkweilai.meinian.api.db.pojo
+  configuration:
+    #输出执行的SQL语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    #SpringBoot日志级别
+    root: info
+    #MyBatis的日志级别
+    com.jkweilai.meinian.api.db.mapper: warn
+  pattern:
+    console: "%d{yyyy/MM/dd HH:mm:ss}  %-5level  %msg%n"
+
+sa-token:
+  # 在HTTP请求头（Header）中传递令牌时的name，例如发送请求时，这样提交token
+  # const config = {headers: {'satoken': token}};
+  # 为什么不采用cookie发送？为了更好地适配前后端分离、移动APP等非浏览器环境。
+  token-name: satoken
+  # Token 的长久有效期，设置为30天
+  timeout: 2592000
+  # 最低活跃频率有效期（-1表示没有最低活跃频率的限制）
+  active-timeout: -1
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: false
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: uuid
+  # 是否尝试从 cookie 里读取 Token，此值为 false 后，StpUtil.login(id) 登录时也不会再往前端注入Cookie
+  # 设置为false，因为我们采用HTTP请求头提交
+  is-read-cookie: false
+  # 开启同端互斥(允许异端登录，但PC端只能有一个账号有效，或者移动端只能有一个账号有效)
+  is-concurrent: false
+
+minio:
+  endpoint: http://192.168.91.200:9000
+  access-key: root
+  secret-key: 12345678
+  bucket: meinian-his
+
+wechat:
+  app-id: wxcc651fcbab275e33
+  app-secret: 84dba6dd51cdaf779e55bcabae564b53
+  pay:
+    v3:
+      meinian-vue:
+        app-id: wxcc651fcbab275e33
+        app-v3-secret: 84dba6dd51cdaf779e55bcabae564b53
+        mch-id: 1631833859
+        domain: http://s0.v100.vip:15296/meinian-api
+        merchant-serial-no: 4AE80B52EBEAB2B96F68E02510A42801E952E889
+
+tencent:
+  im:
+    sdkAppId: ${TENCENT_IM_SDKAPPID}
+    secretKey: ${TENCENT_IM_SECRETKEY}
+    managerId: administrator
+    customerServiceId: customer_service_1
+  cloud:
+    appId: ${FACE_APP_ID}
+    secretId: ${FACE_SECRET_ID}
+    secretKey: ${FACE_SECRET_KEY}
+    face:
+      groupId: his
+      region: ap-beijing
+huawei:
+  appKey: ${HUAWEI_OCR_APPKEY}
+  appSecret: ${HUAWEI_OCR_APPSECRET}

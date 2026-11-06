@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>美年大健康</title>
+    <style>
+      /*
+        将所有HTML元素的盒模型设置为border-box
+          默认值是content-box：width和height只包含内容区
+          设置为border-box：width和height包含内容区、内边距(padding)和边框(border)
+
+          div {
+            width: 200px;
+            padding: 20px;
+            border: 5px solid;
+          }
+          当是content-box时：
+              实际占用宽度 = 200 + 20*2 + 5*2 = 250px
+      
+          当是border-box时：
+              实际占用宽度 = 200px (已经包含padding和border)
+              内容区宽度 = 200 - 20*2 - 5*2 = 150px
+              这种方式属于更直观的布局：设置宽度时不需要考虑padding和border的影响
+      */
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+
+      /* 重置按钮的默认样式，按钮背景色透明，按钮无边框，让按钮内容紧贴边缘。*/
+      button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+      }
+
+      /* 设置页面的高度 */
+      html {
+        height: 100%;
+      }
+
+      body {
+        /* 充满浏览器，避免页面和浏览器边缘有空隙 */
+        margin: 0; 
+        height: inherit;
+        /* 页面文字抗锯齿 */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* 设置字体 */
+      * {
+        font-family: "微软雅黑", Helvetica Neue, Georgia, Menlo, sans-serif;
+      }
+
+      /* 所有超链接没有下划线 */
+      a {
+        text-decoration: none;
+      }
+
+      #app {
+        font-family: Avenir, Helvetica, Arial, sans-serif;
+        height: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+@import url('../style.less'); /* 导入外部样式文件 */
+
+.home {
+    display: flex; /* 使用弹性布局 */
+    justify-content: center; /* 水平居中对齐 */
+    padding-top: 160px; /* 顶部内边距160px */
+    
+    .left {
+        margin-right: 70px; /* 右侧外边距70px */
+        
+        h2 {
+            font-size: 34px; /* 字体大小34px */
+            color: @font-color-34; /* 文字颜色使用变量 */
+            font-weight: bold; /* 粗体字重 */
+            letter-spacing: 1px; /* 字符间距1px */
+            margin-top: 15px; /* 顶部外边距15px */
+        }
+        
+        .desc {
+            border-left: solid 5px @bg-color-24; /* 左侧5px实线边框 */
+            padding-left: 15px; /* 左侧内边距15px */
+            
+            p {
+                font-size: 24px; /* 字体大小24px */
+                font-weight: bold; /* 粗体字重 */
+                color: @font-color-35; /* 文字颜色使用变量 */
+                letter-spacing: 1px; /* 字符间距1px */
+            }
+        }
+        
+        .bottom {
+            display: flex; /* 使用弹性布局 */
+            justify-content: space-between; /* 两端对齐 */
+            margin-top: 40px; /* 顶部外边距40px */
+            
+            .remark-container {
+                .ball {
+                    width: 80px; /* 宽度80px */
+                    height: 80px; /* 高度80px */
+                    border-radius: 40px; /* 圆角40px（圆形） */
+                    line-height: 80px; /* 行高80px（垂直居中） */
+                    font-size: 24px; /* 字体大小24px */
+                    text-align: center; /* 文字水平居中 */
+                    color: #fff; /* 白色文字 */
+                    font-weight: bold; /* 粗体字重 */
+                }
+                
+                .blue {
+                    background-color: @bg-color-32; /* 蓝色背景 */
+                }
+                
+                .red {
+                    background-color: @bg-color-33; /* 红色背景 */
+                }
+                
+                .green {
+                    background-color: @bg-color-34; /* 绿色背景 */
+                }
+                
+                .remark {
+                    width: 100%; /* 宽度100% */
+                    text-align: center; /* 文字水平居中 */
+                    font-size: 16px; /* 字体大小16px */
+                    margin-top: 20px; /* 顶部外边距20px */
+                    color: @font-color-2; /* 文字颜色使用变量 */
+                }
+            }
+        }
+    }
+    
+    .right {
+        .banner {
+            width: 500px; /* 宽度500px */
+            height: auto; /* 高度自适应 */
+        }
+    }
+}

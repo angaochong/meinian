@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jkweilai.meinian.api.db.mapper.PromotionRuleMapper">
+    <insert id="insert" parameterType="PromotionRuleEntity">
+        insert into promotion_rule(rule_name, rule_content, remark) values(#{ruleName}, #{ruleContent}, #{remark})
+    </insert>
+    <delete id="deleteById" parameterType="Integer">
+        delete r from
+        promotion_rule r
+    left join
+        (select r.rule_id,count(*) as count from promotion_rule r join med_exam_package p on r.rule_id = p.promotion_id group by r.rule_id) t
+    on
+        r.rule_id = t.rule_id
+    where
+        r.rule_id = #{ruleId}
+        and
+        t.count is null
+    </delete>
+
+    <select id="selectAll" resultType="Map">
+        select rule_id as ruleId, rule_name as ruleName from promotion_rule;
+    </select>
+
+    <select id="selectPageByQueryCondition" parameterType="Map" resultType="Map">
+        select
+        r.rule_id as ruleId,count(p.id) as count,r.rule_name as ruleName,r.remark
+        from
+        promotion_rule r
+        left join
+        med_exam_package p
+        on
+        r.rule_id = p.promotion_id
+        <where>
+            <if test="ruleName != null and ruleName != ''">
+                and r.rule_name like concat('%', #{ruleName}, '%')
+            </if>
+        </where>
+        group by
+        r.rule_id
+        order by
+        r.rule_id asc
+        limit #{startIndex}, #{pageSize}
+    </select>
+
+    <select id="selectCountByQueryCondition" parameterType="Map" resultType="long">
+        select
+        count(*)
+        from
+        promotion_rule r
+        <where>
+            <if test="ruleName != null and ruleName != ''">
+                and r.rule_name like concat('%', #{ruleName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectById" resultType="PromotionRuleEntity">
+        select
+            rule_id as ruleId, rule_name as ruleName, rule_content as ruleContent, remark
+        from
+            promotion_rule where rule_id = #{ruleId}
+    </select>
+
+    <update id="updateById" parameterType="PromotionRuleEntity">
+        update promotion_rule set
+                                  rule_name = #{ruleName},
+                                  rule_content = #{ruleContent},
+                                  remark = #{remark}
+        where
+            rule_id = #{ruleId}
+    </update>
+</mapper>

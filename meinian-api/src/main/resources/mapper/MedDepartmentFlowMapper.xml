@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jkweilai.meinian.api.db.mapper.MedDepartmentFlowMapper">
+
+    <insert id="insert">
+        insert into med_department_flow
+            (department_name, max_capacity, weight, priority, beacon_uuid)
+        values
+            (#{departmentName},#{maxCapacity},#{weight},#{priority},#{beaconUuid})
+    </insert>
+    <update id="update" parameterType="Map">
+        update med_department_flow
+        set department_name = #{departmentName},
+            max_capacity = #{maxCapacity},
+            weight = #{weight},
+            priority = #{priority},
+            beacon_uuid = #{beaconUuid}
+        where id = #{id}
+    </update>
+    <select id="selectDepartmentNames" resultType="java.lang.String">
+        select department_name as deptName from med_department_flow
+    </select>
+    <select id="selectPage" resultType="MedDepartmentFlowEntity">
+        SELECT id,
+        department_name as departmentName,
+        current_count AS currentCount,
+        max_capacity AS maxCapacity,
+        weight,
+        priority,
+        beacon_uuid AS beaconUuid
+        FROM med_department_flow
+        <where>
+            <if test="deptName != null and deptName != ''">
+                department_name = #{deptName}
+            </if>
+            <if test="beaconUuid != null and beaconUuid != ''">
+                AND beacon_uuid = #{beaconUuid}
+            </if>
+        </where>
+        order by priority desc
+        LIMIT #{startIndex}, #{pageSize}
+    </select>
+    <select id="selectCount" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM med_department_flow
+        <where>
+            <if test="deptName != null and deptName != ''">
+                department_name = #{deptName}
+            </if>
+            <if test="beaconUuid != null and beaconUuid != ''">
+                AND beacon_uuid = #{beaconUuid}
+            </if>
+        </where>
+    </select>
+    <select id="selectById" resultType="MedDepartmentFlowEntity">
+        select id,
+               department_name as departmentName,
+               current_count as currentCount,
+               max_capacity as maxCapacity,
+               weight,
+               priority,
+               beacon_uuid as beaconUuid
+        from med_department_flow
+        where id = #{id}
+    </select>
+    <!-- 不传条件就全部更新，传条件id就更新某一条-->
+    <update id="updateCurrentCount">
+        update med_department_flow
+        set current_count = #{currentCount}
+        <if test="id != null">
+            where id = #{id}
+        </if>
+    </update>
+
+    <!--按照权重-->
+    <select id="selectRecommendationsWithWeight" resultType="java.util.Map">
+        select r.id,
+               r.department_name as departmentName,
+               r.current_count as currentCount,
+               r.weight,
+               (r.weight / t.sum) * (r.max_capacity - r.current_count) as `rank`
+        from med_department_flow r
+                 join (select sum(weight) as sum from med_department_flow) t
+        order by `rank` desc
+    </select>
+
+    <!--按照优先级-->
+    <select id="selectRecommendationsWithPriority" resultType="java.util.Map">
+        select id,
+               department_name as departmentName,
+               current_count as currentCount
+        from med_department_flow
+        order by priority desc, weight asc
+    </select>
+    <select id="selectAllDept" resultType="java.util.Map">
+        select
+            id,department_name as departmentName
+        from
+            med_department_flow
+    </select>
+
+    <delete id="deleteByIds">
+        delete from med_department_flow where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

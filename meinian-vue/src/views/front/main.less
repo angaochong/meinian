@@ -1,0 +1,284 @@
+// 引入全局样式（结尾一定要加分号）
+@import url('../style.less');
+
+.container {
+    // 宽度1200像素(编写w1200快速生成代码)
+    width: 1200px;
+    // 左右添加相同的空白，控件会水平居中。
+    // 具体多大的空白，我们不用管，浏览器自己自动计算，因此采用auto。（mla快速生成代码）
+    margin-left: auto;
+    margin-right: auto;
+}
+
+header {
+    // 让header标签中的内容和浏览器上边框有点边距：内填充30px（pt30快速生成代码）
+    // 30px是测试出来的，效果最佳。自己试吧。
+    padding-top: 30px;
+    // header中有3个div，如果3个div采用float布局，父控件会产生高度坍塌，使用以下样式可以防止这个现象。
+    overflow: hidden;
+    // header中的内容不允许用户使用鼠标选中，允许鼠标选中的话，鼠标指针会显示一个竖线，非常难看。
+    // （usn快速生成代码）
+    user-select: none;
+
+    // header中的第一个div样式
+    .logo-container {
+        // 左浮动
+        float: left;
+        // 添加flex布局，保证图片和div水平排列
+        display: flex;
+        // 鼠标移动到这个div区域后变成手形
+        cursor: pointer;
+        // 第一个div中的图片的样式
+        .logo {
+            // logo图片的宽度设置为80px
+            width: 80px;
+            // 高度等比缩放
+            height: auto;
+            // 图片和右侧的文字之间有点间距，外填充13px
+            margin-right: 13px;
+        }
+        // 美年大健康字体样式
+        h3 {
+            font-size: 34px;
+            // 上下左右的外填充
+            // 上下3px，左右0像素
+            margin: 3px 0;
+            // 字体颜色，引入变量
+            color: @font-color-1; //灰黑色
+        }
+        // 网址的样式
+        p {
+            font-size: 18px;
+            // 上下左右的外填充都是0
+            margin: 0;
+            // 字体颜色，灰黑色
+            color: @font-color-1;
+        }
+    }
+
+    .search-container {
+        // 左浮动（不设置这个div会第一个div的下面）
+        float: left;
+        // 左填充100
+        margin-left: 100px;
+        // 上填充5
+        margin-top: 5px;
+
+        .keyword-input {
+            // 搜索框宽度400
+            width: 400px;
+            // 底部填充10
+            margin-bottom: 10px;
+        }
+        .tag {
+            // 右填充10
+            margin-right: 10px;
+        }
+    }
+
+    .oper-container {
+        // 右浮动
+        float: right;
+        // 将来的 个人中心 退出 可以自动排列
+        display: flex;
+
+        /* 通用按钮容器样式 */
+        .btn {
+            display: flex;          /* 启用Flex布局，使图标和文字水平排列 */
+            margin-left: 30px;      /* 左侧外边距30px，与其他元素保持间距 */
+            cursor: pointer;        /* 鼠标悬停时显示手型指针，表明可点击 */
+            
+            /* 按钮内的图标样式 */
+            .el-icon {
+                margin-top: 1px;    /* 图标微调1px垂直偏移，实现视觉对齐 */
+            }
+            
+            /* 按钮内的文字样式 */
+            span {
+                font-size: 14px;    /* 设置文字大小为14px */
+                color: @font-color-2;       /* 使用预定义变量设置文字颜色（通常为次要文字色） */
+                margin-left: 5px;   /* 文字左侧与图标保持5px间距 */
+            }
+        }
+    }
+}
+
+footer {
+
+    // 页脚和上面区域留个50px的空隙
+    margin-top: 50px;
+
+    // 关于我们  的样式
+    .aboutus-container {
+        // 设置背景色
+        background-color: @bg-color-1;
+        // 不允许用户选中
+        user-select: none;
+        // 列表的样式
+        .list {
+
+            // 宽度1200px
+            width: 1200px;
+
+            // 列表水平居中
+            margin-left: auto;
+            margin-right: auto;
+            
+            // 列表是自带上下外填充的，设置为0
+            margin-top: 0;
+            margin-bottom: 0;
+
+            // 列表是自带内填充的，将所有内填充设置为0
+            padding: 0;
+
+            // 列表项的编号去掉
+            list-style-type: none;
+
+            // 列表项水平排列
+            display: flex;
+            
+            // 两端对齐
+            justify-content: space-between;
+
+            // 列表项样式
+            .item {
+                // 让列表项里面的图片和div水平排列
+                display: flex;
+                
+                // 固定宽度
+                width: 285px;
+
+                // 上下内填充20px
+                // 左右内填充10px
+                padding: 20px 10px;
+        
+                img {
+                    // 图片宽度和高度
+                    width: 58px;
+                    height: 58px;
+                    // 一圈外填充10px
+                    margin: 10px;
+                    // img标签的display默认不是block的，这就会导致img左右会存在空格，导致图片无法和右侧的文字div贴合
+                    // img标签的display设置为block模型，可以消除img标签左右的空格，让img和文字div更加贴合。
+                    display: block;
+                }
+                div {
+                    h3{
+                        font-size: 20px;
+                        color: @font-color-1;
+                        // 上外填充10，右外填充0，下外填充5，左外填充0
+                        margin: 10px 0 5px 0;
+                    }
+                    p{
+                        font-size: 12px;
+                        color: @font-color-3;
+                        // 一圈填充都为0
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    // 联系我们 的样式
+    .contactus-container {
+        // 背景色
+        background-color: @bg-color-28;
+        // 内填充
+        padding: 20px 0 10px 0;
+        // 文字不能被选中
+        user-select: none;
+        // 列表样式
+        .list {
+            // 宽度1200px
+            width: 1200px;
+            // 居中的
+            margin-right: auto;
+            margin-left: auto;
+            // 自带的上下外填充为0
+            margin-top: 0px;
+            margin-bottom: 0px;
+            // 自带的内填充去掉
+            padding: 0;
+            // 自带的样式去掉
+            list-style-type: none;
+            // 列表项水平排列
+            display: flex;
+            // 列表项两端对齐
+            justify-content: space-between;
+            // 最左边的列表项
+            .left {
+                margin-top: 30px;
+                img {
+                    width: 200px;
+                }
+                .tel {
+                    margin: 0;
+                    color: #fff;
+                    font-size: 28px;
+                }
+            }
+            // 中间的几个列表
+            .link-list {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                // 伪类
+                // 第一个列表项加粗
+                li:first-child {
+                    font-weight: bold;
+                }
+                // 超链接的样式
+                a {
+                    color: #fff;
+                    font-size: 14px;
+                    // 设置为block模型，避免影响排版效果
+                    display: block;
+                    // 下外填充10px
+                    margin-bottom: 10px;
+                }
+            }
+            // 最右侧列表
+            .right {
+                display: flex;
+                .ercode {
+                    // & 代表父选择器
+                    &:first-child { // 两个div中的第一个div
+                        margin-right: 20px;
+                    }
+                    p {
+                        color: #fff;
+                        font-size: 14px;
+                        text-align: center;
+                        margin: 0 0 8px 0;
+                    }
+                    img {
+                        width: 110px;
+                        height: 110px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* 对话框组件内部样式 */
+.dialog {
+    /* 对话框内所有行元素设置统一底部间距 */
+    .el-row {
+        margin-bottom: 17px;
+    }
+    
+    /* 接收按钮样式 - 通常用于确认、提交等主要操作 */
+    .receive-btn {
+        width: 100%;        /* 按钮宽度充满父容器 */
+        outline: none;      /* 移除焦点时的轮廓线，保持视觉简洁 */
+    }
+    
+    /* 登录按钮样式 */
+    .login-btn {
+        width: 100%;        /* 按钮宽度充满父容器 */
+        margin-top: 10px;   /* 与上方元素保持10px间距 */
+        height: 45px;       /* 固定按钮高度为45px */
+    }
+}

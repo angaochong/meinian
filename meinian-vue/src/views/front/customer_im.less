@@ -1,0 +1,23 @@
+// 导入全局样式变量文件
+@import url('../style.less');
+
+// 腾讯云IM聊天界面主容器
+.home-TUIKit-main {
+    // 设置固定尺寸：高度750像素，宽度1050像素
+    height: 827px;
+    width: 1050px; 
+    
+    // 边框样式：1像素实线，使用全局定义的边框颜色变量
+    border: solid 1px @border-color-4;
+    
+    // 设置10像素圆角边框
+    border-radius: 10px;
+    
+    overflow: auto;
+    
+    // 针对腾讯云IM内部组件的宽度设置
+    .TUIChat, .TUIConversation, .TUIKit {
+        // 强制内部组件宽度填满父容器（100%宽度）
+        width: 100% !important;  // 使用!important覆盖组件默认样式
+    }
+}

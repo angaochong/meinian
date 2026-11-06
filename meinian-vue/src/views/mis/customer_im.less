@@ -1,0 +1,72 @@
+@import url('../style.less');
+
+.panel-container {
+    display: flex;
+    
+    .home-TUIKit-main2 {
+        width: 1050px;
+        height: 827px; /* 固定高度 */
+        overflow: auto;
+        border: solid 1px @border-color-4;
+        border-radius: 5px;
+        
+        .TUIChat, .TUIConversation, .TUIKit {
+            width: 100% !important;
+        }
+    }
+    
+    .customer-info {
+        margin-left: 20px;
+        flex-grow: 1;
+        .box-card {
+            cursor: default;
+            user-select: none;
+            .info {
+                display: flex;
+                .left {
+                }
+                .right {
+                    margin-left: 15px;
+                    .customer-name {
+                        color: @font-color-1;
+                        font-size: 18px;
+                        margin: 5px 0 0 0;
+                    }
+                    .customer-desc {
+                        display: flex;
+                        margin-top: 10px;
+                        margin-bottom: 0;
+                        .icon {
+                        }
+                        .value {
+                            margin-left: 5px;
+                            margin-right: 25px;
+                            &:last-of-type {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .orders-table {
+            margin-top: 20px;
+        }
+    }
+
+}
+
+
+.el-statistic {
+    --el-statistic-content-font-size: 26px;
+}
+
+.statistic-card {
+    height: 100%;
+    padding: 20px;
+    .title {
+        display: inline-flex;
+        align-items: center;
+        font-size: 14px;
+    }
+}

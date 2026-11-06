@@ -1,0 +1,86 @@
+@import url('../style.less');
+
+.page {
+    // 背景图片
+    background-image: url('../../assets/login/bg.jpg');
+    // 不管图片怎么拉伸，总是要覆盖到div的整个区域上
+    background-size: cover;
+    // 控件高度和宽度应该与浏览器的高度和宽度保持一致
+    width: 100%; // 宽度默认就是100%，可以不给
+    height: 100%;
+
+    // flex也可以设置垂直方向对齐
+    // 如果设置垂直居中以下两个样式配合即可
+    display: flex;
+    align-items: center;
+
+    // 面板样式
+    .panel {
+        // 面板内的两个div水平对齐
+        display: flex;
+        // 面板宽度采用百分比
+        width: 35%;
+        // 面板最小宽度800px
+        min-width: 800px;
+        // 面板水平居中
+        margin-right: auto;
+        margin-left: auto;
+        // 背景色白色
+        background-color: #fff;
+        // 面板圆角
+        border-radius: 10px;
+        // 面板内填充
+        padding: 50px 60px 40px 60px;
+
+        .left {
+            // 由于面板的宽度值不是具体值，因此这个也不能给具体值
+            width: 47%;
+            // 这个样式可以保证，不管怎么添加内填充，该控件的大小都不会变化。
+            box-sizing: border-box;
+
+            .logo {
+                width: 85%;
+                display: block;
+                margin-bottom: 25px;
+            }
+            .big {
+                width: 85%;
+                display: block;
+            }
+        }
+
+        .right {
+            width: 53%;
+
+            .title-container {
+                // 内容水平排列
+                display: flex;
+                // 上填充
+                margin-top: 10px;
+                // 下填充
+                margin-bottom: 30px;
+                h2 {
+                    font-size: 30px;
+                    color: @font-color-33;
+                    margin: 0;
+                }
+                span {
+                    font-size: 16px;
+                    margin-top: 12px;
+                    margin-left: 10px;
+                    color: @font-color-8;
+                }
+            }
+
+            .row {
+                margin-bottom: 23px;
+                text-align: center;
+            }
+
+            .btn {
+                // 按钮宽度
+                width: 100%;
+            }
+        }
+    }
+}

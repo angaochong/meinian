@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jkweilai.meinian.api.db.mapper.CrmCustomerMapper">
+    <!--    开启获取数据库自增主键；把数据库生成的自增主键，回填到实体类的 id 属性上-->
+    <insert id="insert" parameterType="CrmCustomerEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into crm_customer
+            (customer_name,gender,phone,photo_url,register_time)
+        values
+            (#{customerName},#{gender},#{phone},#{photoUrl},now())
+    </insert>
+    <update id="update" parameterType="Map">
+        update crm_customer set
+            customer_name = #{customerName},
+            gender = #{gender},
+            phone = #{phone}
+        where
+            id = #{id}
+    </update>
+
+    <select id="selectByPhone" parameterType="String" resultType="Integer">
+        select id from crm_customer where phone = #{phone}
+    </select>
+    <select id="selectById" resultType="Map">
+        select
+            customer_name as customerName,
+            gender,
+            phone,
+            photo_url as photoUrl,
+            date_format(register_time, '%Y-%m-%d') as registerTime
+        from
+            crm_customer
+        where
+            id = #{id}
+    </select>
+    <select id="countPhoneExist" resultType="Integer">
+        select count(*) from crm_customer where phone = #{phone} and id != #{id}
+    </select>
+</mapper>
